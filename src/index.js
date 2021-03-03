@@ -39,10 +39,13 @@ const rows =
     }
 ]
 
-const table = new Table();
-table.setTitle("Unsere Tabelle");
-// table.setWidth(100);
-table.setColumns(columns);
-table.setRows(rows);
+const table = new Table({ 
+    columns: columns,
+    rows: rows
+});
+// table.setTitle("Unsere Tabelle");
+table.setWidth(100);
+// table.setColumns(columns);
+// table.setRows(rows);
 
 table.showTable();
