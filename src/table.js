@@ -42,7 +42,7 @@ class Table
     {
         const restWidth = width - text.toString().length || 20;
 
-        return ` ${ text.toString() }${ " ".repeat(restWidth - 2) }|`;
+        return ` ${ text.toString() }${ " ".repeat(restWidth - 3) }|`;
     }
 
     /**
@@ -60,11 +60,38 @@ class Table
             if(this.tableColumns.length === i + 1)
             {
                 // problem mit width + 2 oder - 1;
-                tempString += this.createColumn(column.title, width - 1);
+                tempString += this.createColumn(column.title, width + 2);
             }
             else
             {
                 tempString += this.createColumn(column.title, column.width);
+            }
+
+            width -= column.width;
+        });
+
+        return tempString;
+    }
+
+    /**
+     * @method createDivider();
+     * @description Eine Methode um unseren divider zu erstellen
+     * @returns { string }
+     */
+    createDivider = () => 
+    {
+        let tempString = "|";
+        let width = this.tableWidth;
+
+        this.tableColumns.forEach((column, i) =>
+        {
+            if(this.tableColumns.length === i + 1)
+            {
+                tempString += "-".repeat(width) + "|";
+            }
+            else
+            {
+                tempString += "-".repeat(column.width - 2 || 20) + "|";
             }
 
             width -= column.width;
@@ -81,7 +108,7 @@ class Table
     {
         console.log(this.createTitle());
         console.log(this.createHeader());
-        console.log("Divider");
+        console.log(this.createDivider());
         console.log("Zeilen");
     }
 }
