@@ -101,6 +101,41 @@ class Table
     }
 
     /**
+     * @method createRow();
+     * @description Eine Methode um unsere rows (Zeilen) zu erstellen.
+     * @param { object } rowContent - Der inhalt jedes row-objects.
+     * @returns { string }
+     */
+    createRow = (rowContent) =>
+    {
+        let tempString = "|";
+        
+        for(let prop in rowContent)
+        {
+            let width = this.tableWidth;
+
+            this.tableColumns.forEach((column, i) =>
+            {
+                if(column.key === prop) // key = "id" => tableRows[0]["id"];
+                {
+                    if(this.tableColumns.length === i + 1)
+                    {
+                        tempString += this.createColumn(rowContent[prop], width + 2);
+                    }
+                    else
+                    {
+                        tempString += this.createColumn(rowContent[prop], column.width);
+                    }
+                }
+
+                width -= column.width;
+            })
+        }
+
+        return tempString;
+    }
+
+    /**
      * @method showTable();
      * @description Eine Methode um unsere Tabelle anzuzeigen
      */
@@ -109,7 +144,11 @@ class Table
         console.log(this.createTitle());
         console.log(this.createHeader());
         console.log(this.createDivider());
-        console.log("Zeilen");
+
+        this.tableRows.forEach((row, i) =>
+        {
+            console.log(this.createRow(row));
+        });
     }
 }
 
