@@ -41,13 +41,13 @@ const rows =
 
 const table = new Table();
 table.setTitle("Unsere Tabelle");
-table.setWidth(150);
+table.setWidth(100);
 table.setColumns(columns);
 table.setRows(rows);
 
 console.log(table);
 
-// console.log(table.createColumn("testwort", 50));
+console.log(table.createColumn("testwort", 50));
 
 console.log("=".repeat(50));
 

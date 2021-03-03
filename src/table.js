@@ -46,13 +46,41 @@ class Table
     }
 
     /**
+     * @method createHeader();
+     * @description Eine Methode um unseren header zu erstellen
+     * @returns { string }
+     */
+    createHeader = () =>
+    {
+        let tempString = "|";
+        let width = this.tableWidth;
+
+        this.tableColumns.forEach((column, i) =>
+        {
+            if(this.tableColumns.length === i + 1)
+            {
+                // problem mit width + 2 oder - 1;
+                tempString += this.createColumn(column.title, width - 1);
+            }
+            else
+            {
+                tempString += this.createColumn(column.title, column.width);
+            }
+
+            width -= column.width;
+        });
+
+        return tempString;
+    }
+
+    /**
      * @method showTable();
-     * @description Eine Methode um unseren table anzuzeigen
+     * @description Eine Methode um unsere Tabelle anzuzeigen
      */
     showTable = () =>
     {
         console.log(this.createTitle());
-        console.log("Header");
+        console.log(this.createHeader());
         console.log("Divider");
         console.log("Zeilen");
     }
