@@ -11,26 +11,27 @@ class Table
      */
     constructor({ title, width, columns, rows } = {})
     {
-        this.tableTitle = title || 'Default Table';
-        this.tableWidth = width || process.stdout.columns;
-        this.tableColumns = columns || [];
-        this.tableRows = rows || [];
+        this.title = title || 'Default Table';
+        this.width = width || process.stdout.columns;
+        this.columns = columns || [];
+        this.rows = rows || [];
     }
 
-    setTitle = (title) => this.tableTitle = title;
-    setWidth = (width) => this.tableWidth = width;
-    setColumns = (columns) => this.tableColumns = columns;
-    setRows = (rows) => this.tableRows = rows;
+    setTitle = (title) => this.title = title;
+    setWidth = (width) => this.width = width;
+    setColumns = (columns) => this.columns = columns;
+    setRows = (rows) => this.rows = rows;
 
     /**
      * @method createTitle();
      * @description Eine Methode um unseren Titel zu erstellen
+     * @returns { string }
      */
     createTitle = () =>
     {
-        const padding = Math.round((this.tableWidth - this.tableTitle.length) / 2);
+        const padding = Math.round((this.width - this.title.length) / 2);
 
-        return `\n${ " ".repeat(padding) }${ this.tableTitle }${ " ".repeat(padding) }`;
+        return `\n${ " ".repeat(padding) }${ this.title }${ " ".repeat(padding) }`;
     }
 
     /**
@@ -53,18 +54,23 @@ class Table
     createHeader = () =>
     {
         let tempString = "|";
-        let width = this.tableWidth;
+        let width = this.width;
 
-        this.tableColumns.forEach((column, i) =>
+        this.columns.forEach((column, i) =>
         {
-            if(this.tableColumns.length === i + 1)
+            if(this.columns.length === i + 1)
             {
                 // problem mit width + 2 oder - 1;
                 tempString += this.createColumn(column.title, width + 2);
+                // ergibt:
+                //  Role                                                            |
             }
             else
             {
                 tempString += this.createColumn(column.title, column.width);
+                // ergibt:
+                //  ID     |
+                //  Name                  |
             }
 
             width -= column.width;
@@ -81,11 +87,11 @@ class Table
     createDivider = () => 
     {
         let tempString = "|";
-        let width = this.tableWidth;
+        let width = this.width;
 
-        this.tableColumns.forEach((column, i) =>
+        this.columns.forEach((column, i) =>
         {
-            if(this.tableColumns.length === i + 1)
+            if(this.columns.length === i + 1)
             {
                 tempString += "-".repeat(width) + "|";
             }
@@ -106,25 +112,25 @@ class Table
      * @param { object } rowContent - Der inhalt jedes row-objects.
      * @returns { string }
      */
-    createRow = (rowContent) =>
+    createRow = (row) =>
     {
         let tempString = "|";
         
-        for(let prop in rowContent)
+        for(let key in row)
         {
-            let width = this.tableWidth;
+            let width = this.width;
 
-            this.tableColumns.forEach((column, i) =>
+            this.columns.forEach((column, i) =>
             {
-                if(column.key === prop) // key = "id" => tableRows[0]["id"];
+                if(column.key === key) // key = "id" => tableRows[0]["id"];
                 {
-                    if(this.tableColumns.length === i + 1)
+                    if(this.columns.length === i + 1)
                     {
-                        tempString += this.createColumn(rowContent[prop], width + 2);
+                        tempString += this.createColumn(row[key], width + 2);
                     }
                     else
                     {
-                        tempString += this.createColumn(rowContent[prop], column.width);
+                        tempString += this.createColumn(row[key], column.width);
                     }
                 }
 
@@ -137,7 +143,7 @@ class Table
 
     /**
      * @method showTable();
-     * @description Eine Methode um unsere Tabelle anzuzeigen
+     * @description Eine Methode um unsere Tabelle anzuzeigen - unsere Initialisierungsmethode.
      */
     showTable = () =>
     {
@@ -145,7 +151,7 @@ class Table
         console.log(this.createHeader());
         console.log(this.createDivider());
 
-        this.tableRows.forEach((row, i) =>
+        this.rows.forEach((row, i) =>
         {
             console.log(this.createRow(row));
         });

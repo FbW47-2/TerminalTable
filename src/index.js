@@ -16,6 +16,11 @@ const columns =
     {
         key: 'role',
         title: 'Role',
+        width: 30
+    },
+    {
+        key: 'email',
+        title: 'E-Mail',
         width: 50
     }
 ];
@@ -25,17 +30,20 @@ const rows =
     {
         id: 1,
         name: 'Herbert',
-        role: 'Admin'
+        role: 'Admin',
+        email: 'test@example.com'
     },
     {
         id: 2,
         name: 'Stefan',
-        role: 'Moderator'
+        role: 'Moderator',
+        email: ''
     },
     {
         id: 3,
         name: 'John',
-        role: 'Moderator'
+        role: 'Moderator',
+        email: 'ich@du.de'
     }
 ]
 
@@ -44,7 +52,7 @@ const table = new Table({
     rows: rows
 });
 // table.setTitle("Unsere Tabelle");
-table.setWidth(100);
+// table.setWidth(100);
 // table.setColumns(columns);
 // table.setRows(rows);
 
